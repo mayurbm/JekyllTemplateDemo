@@ -1,0 +1,76 @@
+---
+layout: article
+category: Blog
+subcategory: Index
+toc: false
+title: All Content by Tag
+exclude_from_search: true
+---
+{% include collecttags.html %}
+{% include collectcategories.html %}
+
+<article>
+  <h1>{{page.title}}</h1>
+  <ul class="tag-cloud">
+    {% for tag in tags %}
+    {% if tag <> "Blog" %}
+      <li><input type="checkbox" id="{{ tag | cgi_escape}}Box" /><label class="filter" id="{{ tag | cgi_escape }}" onclick="myFilter(this.id)" for="{{ tag | cgi_escape}}Box">{{ tag }}</label></li>
+      {% endif %}
+      {% endfor %}
+  </ul>
+
+  {% for cat in categories %}
+  {% if cat <> "Blog" %}
+    <h2>{{cat}}</h2>
+    <ul class="flex-container">
+      {% include collectsubcategories.html content=cat %}
+      {% for subcat in subcategories %}
+      <li class="flex-item" id="{{ subcat | cgi_escape}}Content" name="{{ subcat | cgi_escape}}Content">
+        <h3 id="{{ subcat | cgi_escape }}">{% if subcat <> cat %}{{ subcat }}{% else %}Generic{% endif %}</h3>
+        <ul class="linklist">
+          {% assign sorted_documents = site.documents | sort: 'title' %}
+          {% for doc in sorted_documents %}
+          {% if doc.subcategory == subcat or doc.tags contains subcat %}
+          {% if doc.category <> "Blog" %}
+            <li>
+              <a href=" {{ site.baseurl }} {{ doc.url }}">{{ doc.title }}</a></li>
+            {% endif %}
+            {% endif%}
+            {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+    <hr>
+    {% endif %}
+    {% endfor %}
+
+    <h2>Blog</h2>
+    <ul class="flex-container">
+      {% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %} {% assign sortedTags = site_tags | split:',' | sort %}
+      {% for tag in sortedTags %}
+      <li class="flex-item" id="{{tag | cgi_escape}}BlogContent" name="{{ tag | cgi_escape}}Content">
+        <h3 id="{{ tag | cgi_escape }}Blog">{{ tag }}</h3>
+        <ul class="linklist">
+          {% for doc in sorted_documents %}
+          {% if doc.subcategory == tag or doc.tags contains tag %}
+          {% if doc.category == "Blog" %}
+          <li><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></li>
+          {% endif %}
+          {% endif%}
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+</article>
+<script>
+  var urlParam = getUrlVars()["selected"];
+  var box = urlParam + "Box";
+
+  if (urlParam !== undefined) {
+    myFilter(urlParam);
+    document.getElementById(box).checked = true;
+  }
+</script>

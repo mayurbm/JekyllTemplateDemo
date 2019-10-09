@@ -1,0 +1,18 @@
+{% assign sorted_documents = site.documents | sort: "title" %}
+
+<ul>
+{% for i in (0..5) %}
+{% for doc in sorted_documents %}
+  {% if doc.priority == i and doc.category <> "Blog" and (doc.subcategory == include.content or doc.tags contains include.content) %}
+    <li><a {% if doc.url == page.url %} class="highlight" {% endif %} href="{{ site.baseurl }}{{ doc.url }}">{{   doc.title }}</a></li>
+  {% endif%}
+{% endfor %}
+{% endfor %}
+</ul>
+<ul>
+{% for doc in sorted_documents | sort: 'title' %}
+  {% if doc.tags contains include.content and doc.category == "Blog" %}
+    <li><a {% if doc.url == page.url %} class="highlight" {% endif %} href="{{ site.baseurl }}{{ doc.url }}">{{   doc.title }}</a> (Blog Post)</li>
+  {% endif%}
+{% endfor %}
+</ul>

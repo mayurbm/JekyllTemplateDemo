@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<article class="article" id="article" style="width: 66%;">
+{% include fullscreen_button.html %}
+{% if page.category == "Blog" %}
+  <h1>{{page.title}}</h1>
+{% endif %}
+  {{content}}
+
+</article>
+
+
+{% unless page.sidebar == false %}
+  {% include sidebar.html %}
+{% endunless %}
+{% unless page.toc == false %}
+  {% include toc.html html=content %}
+{% endunless %}

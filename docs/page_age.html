@@ -1,0 +1,225 @@
+---
+title: Page Age for Review
+layout: article
+toc: false
+sidebar: false
+category: Site Admin
+exclude_from_search: true
+---
+<style>
+  .registers{
+    display: block;
+    position: relative;
+}
+
+.registers .register{
+    float: left;
+    display: block;
+}
+
+.registers .register>input[type="radio"] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.registers .register>label {
+    display: block;
+    cursor: pointer;
+    margin-right: 20px;
+    position: relative;
+
+}
+
+.registers .content {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    top: 27px;
+    left: 0;
+    opacity:0;
+}
+
+.registers>.register>[id^="register"]:checked + label {
+    top: 0;
+    background: #008FD3;
+    color: white
+}
+
+.registers>.register>[id^="register"]:checked ~ [id^="register-content"] {
+    display: block;
+    opacity: 1;
+    transition: opacity 400ms ease-out;
+}
+</style>
+
+<!--___________________________________________________________-->
+
+<h1>All Pages by Age</h1>
+<ul class="registers">
+  <li class="register">
+    <input type="radio" name="registers" checked="checked" id="register1" />
+    <label for="register1">Older than 6 Months</label>
+    <div id="register-content1" class="content">
+
+      <hr />
+      <table style="width:100%;" class="sortable">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Last Updated On</th>
+          <th>Contact</th>
+        </tr>
+        {% assign timeframe = 110678400 %}
+        {% for doc in site.documents %}
+        {% assign doc_in_seconds = doc.last_update | date: "%s" | plus: 0 %}
+        {% assign docs_timeframe = "now" | date: "%s" | minus: timeframe %}
+        {% if doc.category <> "Blog" %}
+          {% if doc_in_seconds < docs_timeframe %} <tr>
+            <td><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></td>
+            <td>{{doc.category}}</td>
+            <td>{{doc.subcategory}}</td>
+            <td>{{doc.last_update | date: "%Y-%m-%d"}}</td>
+            <td>{{doc.author }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+      </table>
+    </div>
+  </li>
+  <li class="register">
+    <input type="radio" name="registers" id="register2" />
+    <label for="register2">Older than 3 Months</label>
+    <div id="register-content2" class="content">
+
+      <hr />
+      <table style="width:100%;" class="sortable">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Last Updated On</th>
+          <th>Contact</th>
+        </tr>
+        {% assign timeframe = 7884000 %}
+        {% for doc in site.documents %}
+        {% assign doc_in_seconds = doc.last_update | date: "%s" | plus: 0 %}
+        {% assign docs_timeframe = "now" | date: "%s" | minus: timeframe %}
+        {% if doc.category <> "Blog" %}
+          {% if doc_in_seconds < docs_timeframe %} <tr>
+            <td><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></td>
+            <td>{{doc.category}}</td>
+            <td>{{doc.subcategory}}</td>
+            <td>{{doc.last_update | date: "%Y-%m-%d"}}</td>
+            <td>{{doc.author }}</td>
+            </tr>
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+      </table>
+    </div>
+  </li>
+  <li class="register">
+    <input type="radio" name="registers" id="register3" />
+    <label for="register3">Older than One Month</label>
+    <div id="register-content3" class="content">
+      <hr />
+      <table style="width:100%;" class="sortable">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Last Updated On</th>
+          <th>Contact</th>
+        </tr>
+        {% assign timeframe = 2678400 %}
+        {% for doc in site.documents %}
+        {% assign doc_in_seconds = doc.last_update | date: "%s" | plus: 0 %}
+        {% assign docs_timeframe = "now" | date: "%s" | minus: timeframe %}
+        {% if doc.category <> "Blog" %}
+          {% if doc_in_seconds < docs_timeframe %}
+            <tr>
+              <td><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></td>
+              <td>{{doc.category}}</td>
+              <td>{{doc.subcategory}}</td>
+              <td>{{doc.last_update | date: "%Y-%m-%d"}}</td>
+              <td>{{doc.author }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+      </table>
+    </div>
+  </li>
+  <li class="register">
+    <input type="radio" name="registers" id="register4" />
+    <label for="register4">Last Month</label>
+
+    <div id="register-content4" class="content">
+      <hr />
+      <table style="width:100%;" class="sortable">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Last Updated On</th>
+          <th>Contact</th>
+        </tr>
+        {% assign timeframe = 2678400 %}
+        {% for doc in site.documents %}
+        {% assign doc_in_seconds = doc.last_update | date: "%s" | plus: 0 %}
+        {% assign docs_timeframe = "now" | date: "%s" | minus: timeframe %}
+        {% if doc.category <> "Blog" %}
+          {% if doc_in_seconds > docs_timeframe %}
+          <tr>
+            <td><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></td>
+            <td>{{doc.category}}</td>
+            <td>{{doc.subcategory}}</td>
+            <td>{{doc.last_update | date: "%Y-%m-%d"}}</td>
+            <td>{{doc.author }}</td>
+          </tr>
+          {% endif %}
+          {% endif%}
+          {% endfor %}
+      </table>
+    </div>
+  </li>
+  <li class="register">
+    <input type="radio" name="registers" id="register5" />
+    <label for="register5">Last Week</label>
+    <div id="register-content5" class="content">
+      <hr />
+      <table style="width:100%;" class="sortable">
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Last Updated On</th>
+          <th>Contact</th>
+        </tr>
+        {% assign timeframe = 604800 %}
+        {% for doc in site.documents %}
+        {% assign doc_in_seconds = doc.last_update | date: "%s" | plus: 0 %}
+        {% assign docs_timeframe = "now" | date: "%s" | minus: timeframe %}
+        {% if doc.category <> "Blog" %}
+          {% if doc_in_seconds > docs_timeframe %}
+          <tr>
+            <td><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></td>
+            <td>{{doc.category}}</td>
+            <td>{{doc.subcategory}}</td>
+            <td>{{doc.last_update | date: "%Y-%m-%d"}}</td>
+            <td>{{doc.author }}</td>
+          </tr>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+      </table>
+    </div>
+  </li>
+
+</ul>

@@ -1,0 +1,125 @@
+#Page Settings
+title: SiteTitle
+repository: mayurbm/JekyllTemplateDemo
+branch: master #or gh-pages
+
+paginate: 3
+paginate_path: '/blog/page:num/'
+permalink: /:categories/:title
+layout: default
+excerpt_separator: "<!--more-->"
+
+
+#Collections:
+collections:
+  category1:
+    output: true
+    subcategory1_1:
+      output: true
+    subcategory1_2:
+      output: true
+    subcategory1_3:
+      output: true
+
+  category2:
+     output: true
+     subcategory2_1:
+       output: true
+     subcategory2_2:
+       output: true
+     subcategory2_3:
+       output: true
+
+
+#Defaults
+defaults:
+ -
+  scope:
+    path: ""
+  values:
+    priority: 5
+ -
+  scope:
+      path: "_category1"
+  values:
+    layout: "article"
+    category: "Category1"
+    subcategory: Category1
+ -
+  scope:
+      path: "_category1/subcategory1_1"
+  values:
+    layout: "article"
+    category: "Category1"
+    subcategory: Subcategory1_1
+ -
+  scope:
+      path: "_category1/subcategory1_2"
+  values:
+    layout: "article"
+    category: "Category1"
+    subcategory: Subcategory1_2
+ -
+  scope:
+      path: "_category1/subcategory1_3"
+  values:
+    layout: "article"
+    category: "Category1"
+    subcategory: Subcategory1_3
+ -
+  scope:
+      path: "_category2"
+  values:
+    layout: "article"
+    category: "Category2"
+    subcategory: Category2
+ -
+  scope:
+    path: "_category2/subcategory2_1"
+  values:
+    layout: "article"
+    category: "Category2"
+    subcategory: "Subcategory2_1"
+ -
+  scope:
+    path: "_category2/subcategory2_2"
+  values:
+    layout: "article"
+    category: "Category2"
+    subcategory: "Subcategory2_2"
+ -
+  scope:
+    path: "_category2/subcategory2_3"
+  values:
+    layout: "article"
+    category: "Category2"
+    subcategory: "Subcategory2_3"
+
+ -
+  scope:
+    path: "_posts"
+  values:
+    layout: "article"
+    category: "Blog"
+    subcategory: Blog
+
+#Markdown Settings
+markdown: kramdown
+kramdown:
+  auto_ids: true
+
+# Search settings
+tipue_search:
+  include:
+    pages: true
+    collections: [category1, category2]
+  exclude:
+    files: ["search.html", "Readme.md"]
+
+#Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jemoji
+  - jekyll-feed
+  - jekyll-include-cache

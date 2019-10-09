@@ -1,0 +1,39 @@
+---
+layout: article
+subcategory: Index
+exclude_from_search: true
+---
+{% include collectsubcategories.html content=page.category %}
+
+<h1>Contents of the {{ page.category }} Section</h1>
+<ul class="tag-cloud">
+  <li>
+    <input type="checkbox" id="GenericBox" /><label class="filter" id="Generic" onclick="myFilter(this.id)" for="GenericBox">Generic</label>
+  </li>
+  {% for subcat in subcategories %}
+  {% if subcat <> page.category %}
+    <li>
+      <input type="checkbox" id="{{subcat| cgi_escape}}Box" /><label class="filter" id="{{subcat | cgi_escape}}" onclick="myFilter(this.id)" for="{{subcat | cgi_escape}}Box">{{ subcat }}</label>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+</ul>
+
+
+<ul class="flex-container">
+  <li class="flex-item" id="GenericContent">
+    <h3 id="GenericContent" name="GenericContent">Generic</h3>
+    {% include list_subcategories.html content=page.category %}
+  </li>
+  {% for subcat in subcategories %}
+  {% if subcat <> page.category %}
+    <li class="flex-item" id="{{subcat | cgi_escape}}Content" name="{{subcat | cgi_escape}}Content">
+      <h3 id="{{ subcat | cgi_escape }}">{{subcat}}</h3>
+      <ul class="linklist">
+        {% include list_subcategories.html content=subcat %}
+      </ul>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>

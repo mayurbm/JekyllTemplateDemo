@@ -1,0 +1,26 @@
+{% assign sorted_documents = site.documents | sort: 'title' %}
+
+{% assign rawsubcategories = "" %}
+
+{% for doc in sorted_documents %}
+{% if doc.subcategory <> "Index" %}
+	{% if doc.category == include.content %}
+  	{% assign tsubcats = doc.subcategory | join:'|' | append:'|' %}
+		{% assign rawsubcategories = rawsubcategories | append:tsubcats %}
+	{% endif %}
+{% endif %}
+{% endfor %}
+
+{% assign rawsubcategories = rawsubcategories | split:'|' | sort %}
+
+{% assign subcategories = "" %}
+{% for subcat in rawsubcategories %}
+	{% if subcat != "" %}
+		{% if subcategories == "" %}
+			{% assign subcategories = subcat | split:'|' %}
+		{% endif %}
+		{% unless subcategories contains subcat %}
+			{% assign subcategories = subcategories | join:'|' | append:'|' | append:subcat | split:'|' %}
+		{% endunless %}
+	{% endif %}
+{% endfor %}
