@@ -123,3 +123,5 @@ plugins:
   - jemoji
   - jekyll-feed
   - jekyll-include-cache
+
+theme: jekyll-theme-architect
